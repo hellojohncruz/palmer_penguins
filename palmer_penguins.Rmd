@@ -1,0 +1,74 @@
+---
+title: "Palmer Penguina"
+author: "John Cruz"
+date: "2023-02-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Required Libraries
+
+```{r library, warning=FALSE}
+library(tidyverse)
+
+# penguins dataset containing body measurements for penguins on three islands in the Palmer Archipelago.
+library(palmerpenguins)
+```
+
+Do penguins with longer flippers weigh more or less than penguins with shorter flippers? 
+
+## Overview
+``` {r dataframe}
+df <- palmerpenguins::penguins
+
+knitr::kable(head(df))
+```
+
+``` {r plot-flipper-vs-mass-by-species}
+ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species), na.rm = TRUE) +
+  geom_smooth(na.rm = TRUE) +
+  labs(title = "Body Mass vs. Flipper Length",
+        subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+        x = "Flipper length (mm)",
+        y = "Body mass (g)",
+        color = "Species",
+        shape = "Species")
+```
+
+``` {r plot-bill_depth-bill_length}
+ggplot(df, aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(na.rm = TRUE) +
+  labs(title = "Bill Depth vs. Bill Length", 
+       x = "Bill Depth (mm)", 
+       y = "Bill Length (mm)",
+       caption = "Data come from the palmerpenguins package.")
+```
+
+``` {r plot-fliiper-mass-depth}
+ggplot(df, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) +
+  geom_point(aes(shape = species), na.rm = TRUE) +
+  labs(title = "Bill Depth vs. Bill Length", 
+       x = "Bill Depth (mm)", 
+       y = "Bill Length (mm)",
+       caption = "Data come from the palmerpenguins package.")
+```
+
+
+
+
+
+
+``` {r test-code}
+penguins %>%
+  select(species, flipper_length_mm, body_mass_g) %>%
+  filter(is.na(body_mass_g) | is.na(flipper_length_mm))
+```
+
+
+
+
+
