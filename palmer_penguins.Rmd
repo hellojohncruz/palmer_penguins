@@ -1,8 +1,8 @@
 ---
-title: "Palmer Penguina"
+title: "Palmer Penguins"
 author: "John Cruz"
 date: "2023-02-04"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -11,10 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Required Libraries
 
-```{r library, warning=FALSE}
+```{r library, warning=FALSE, message=FALSE}
 library(tidyverse)
-
-# penguins dataset containing body measurements for penguins on three islands in the Palmer Archipelago.
 library(palmerpenguins)
 ```
 
@@ -26,6 +24,8 @@ df <- palmerpenguins::penguins
 
 knitr::kable(head(df))
 ```
+
+## Scatterplot of Body Mass vs. Flipper Length by Species
 
 ``` {r plot-flipper-vs-mass-by-species}
 ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
@@ -39,6 +39,8 @@ ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
         shape = "Species")
 ```
 
+## Scatterplot of Bill Depth vs. Bill Length
+
 ``` {r plot-bill_depth-bill_length}
 ggplot(df, aes(x = bill_depth_mm, y = bill_length_mm)) +
   geom_point(na.rm = TRUE) +
@@ -48,24 +50,31 @@ ggplot(df, aes(x = bill_depth_mm, y = bill_length_mm)) +
        caption = "Data come from the palmerpenguins package.")
 ```
 
-``` {r plot-fliiper-mass-depth}
-ggplot(df, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) +
-  geom_point(aes(shape = species), na.rm = TRUE) +
-  labs(title = "Bill Depth vs. Bill Length", 
-       x = "Bill Depth (mm)", 
-       y = "Bill Length (mm)",
-       caption = "Data come from the palmerpenguins package.")
+## Scatterplot of Flipper Length vs. Body Mass by Bill Depth
+
+``` {r plot-flipper-mass-depth, warning=FALSE}
+ggplot(df, aes(x = flipper_length_mm, y = body_mass_g, color = bill_depth_mm)) +
+  geom_point() +
+  geom_smooth() + 
+  labs(title = "Flipper Length vs. Body Mass", 
+       x = "Flipper Length (mm)", 
+       y = "Body Mass (g)",
+       color = 'Bill Depth (mm)')
+```
+
+## Count Plot of Penguin Species within Dataset
+
+``` {r plot-species-count}
+ggplot(penguins, aes(x = species)) +
+  geom_bar()
 ```
 
 
 
 
-
-
 ``` {r test-code}
-penguins %>%
-  select(species, flipper_length_mm, body_mass_g) %>%
-  filter(is.na(body_mass_g) | is.na(flipper_length_mm))
+ggplot(penguins, aes(x = species)) +
+  geom_bar()
 ```
 
 
