@@ -62,20 +62,51 @@ ggplot(df, aes(x = flipper_length_mm, y = body_mass_g, color = bill_depth_mm)) +
        color = 'Bill Depth (mm)')
 ```
 
-## Count Plot of Penguin Species within Dataset
+## Count Plot of Penguin Species
 
 ``` {r plot-species-count}
+ggplot(penguins, aes(x = fct_infreq(species))) +
+  geom_bar() +
+  labs(x = 'species')
+```
+
+## Distribution of Body Mass
+
+``` {r hist-body_mass, warning=FALSE}
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 200)
+```
+
+## Looking at *geom_bar()* Color vs. Fill Attributes
+
+``` {r color-vs-fill}
 ggplot(penguins, aes(x = species)) +
-  geom_bar()
+  geom_bar(color = "red")
+
+ggplot(penguins, aes(x = species)) +
+  geom_bar(fill = "red")
+```
+
+## Distributions of Body Mass based on Species
+
+``` {r boxplot, warning=FALSE}
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot()
+```
+
+## ABC
+
+```{r frequency-polygons, warning=FALSE}
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
+  geom_density(alpha = 0.5)
 ```
 
 
 
 
-``` {r test-code}
-ggplot(penguins, aes(x = species)) +
-  geom_bar()
-```
+
+
+
 
 
 
