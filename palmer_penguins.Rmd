@@ -94,13 +94,38 @@ ggplot(penguins, aes(x = species, y = body_mass_g)) +
   geom_boxplot()
 ```
 
-## ABC
+## Population Proportion of Species to each Island
 
-```{r frequency-polygons, warning=FALSE}
-ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
-  geom_density(alpha = 0.5)
+```{r stacked-plot-island-species, warning=FALSE}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position ='fill') +
+  labs(y = '% of island population') +
+  scale_y_continuous(labels = scales::percent)
 ```
 
+## Weight and Flipper Length of Species to each Island
+
+```{r facet_plot-species-island, warning=FALSE, echo=FALSE}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species)) +
+  facet_wrap(~island) +
+  theme(panel.spacing = unit(2, "lines"))
+
+ggsave(filename = 'facet_plot_penguins.png')
+```
+
+## Weight and Flipper Length of Species to each Island
+
+```{r test, warning=FALSE}
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_length_mm, y = bill_depth_mm, 
+    color = species, shape = species
+  )
+) +
+  geom_point()
+```
 
 
 
